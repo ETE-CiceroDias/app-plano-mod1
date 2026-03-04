@@ -20,7 +20,7 @@ const CONFIG = {
 };
 
 const disciplinas = [
-  { id: "dcu", codigo: "DE_232", nome: "Design Centrado no Usuário", ch: "40h", cor: "indigo", icon: "🎯", disponivel: true,  imagem: dcuApp, descricao: "Avaliar, questionar e justificar decisões de design com base em usabilidade e interação." },
+  { id: "dcu", codigo: "DE_232", nome: "Design Centrado no Usuário", ch: "40h", cor: "indigo", icon: "🎯", disponivel: true,  imagem: dcuApp, descricao: "Avaliar, questionar e justificar decisões de design com base em usabilidade e interação.",  ClassroomA: "https://classroom.google.com/c/Nzk0MTMxNjMyNjM4?cjc=fni6mzwd",  ClassroomB: "https://classroom.google.com/c/Nzk0MTMxNTE0MDAy?cjc=7gg4shse"},
   { id: "dt",  codigo: "DE_233", nome: "Design Thinking",            ch: "40h", cor: "rose",   icon: "💡", disponivel: false, imagem: dtApp, descricao: "Criar com empatia — persona, prototipação e desenvolvimento de soluções inovadoras." },
   { id: "pi",  codigo: "DE_234", nome: "Projeto Integrador I",       ch: "80h", cor: "orange", icon: "🚀", disponivel: false, imagem: piApp, descricao: "Integrar os conhecimentos do módulo em um projeto real orientado aos ODS." },
 ];
@@ -273,7 +273,6 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
       <aside className="w-72 flex-shrink-0 flex flex-col bg-gray-900 text-white sticky top-0 h-screen overflow-y-auto">
         <div className="relative overflow-hidden px-6 pt-8 pb-6 border-b border-white border-opacity-10">
           {CONFIG.bannerHub && <img src={CONFIG.bannerHub} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />}
-          {/* <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-gray-900 to-rose-900 opacity-70" /> */}
           <div className="relative">
             <div className="text-xs text-white opacity-40 uppercase tracking-widest mb-2">{CONFIG.escola}</div>
             <div className="text-lg font-bold leading-tight">Planos de Ensino</div>
@@ -334,7 +333,7 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
         </div>
       </aside>
 
-      {/* ÁREA DE CONTEÚDO — centralizada */}
+      {/* ÁREA DE CONTEÚDO */}
       <main className="flex-1 overflow-y-auto">
         {!disc ? (
           <div className="p-8 max-w-4xl mx-auto w-full">
@@ -366,7 +365,24 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                     <div className="px-5 py-4">
                       <div className="font-bold text-gray-900 text-base mb-1">{d.nome}</div>
                       <div className="text-xs text-gray-400 mb-2">{d.codigo} · {d.ch}</div>
-                      <p className="text-xs text-gray-500 leading-relaxed">{d.descricao}</p>
+                      <p className="text-xs text-gray-500 leading-relaxed mb-2">{d.descricao}</p>
+                      {/* ✅ LINKS CLASSROOM — painel home desktop */}
+                      {(d.ClassroomA || d.ClassroomB) && (
+                        <div className="flex flex-col gap-1 mt-1" onClick={e => e.stopPropagation()}>
+                          {d.ClassroomA && (
+                            <a href={d.ClassroomA} target="_blank" rel="noopener noreferrer"
+                              className="text-xs text-blue-600 hover:underline hover:text-blue-800 truncate">
+                              🔗 Turma A — Acessar Classroom
+                            </a>
+                          )}
+                          {d.ClassroomB && (
+                            <a href={d.ClassroomB} target="_blank" rel="noopener noreferrer"
+                              className="text-xs text-blue-600 hover:underline hover:text-blue-800 truncate">
+                              🔗 Turma B — Acessar Classroom
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div className="px-5 py-3 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-xs text-gray-400">{CONFIG.modulo}</span>
@@ -396,20 +412,33 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
           </div>
         ) : (
           <div>
+            {/* ✅ BANNER DESKTOP com links Classroom */}
             <div className={`relative ${c.bg} text-white`}>
               {disc.imagem && <img src={disc.imagem} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />}
               {!disc.imagem && (
                 <div className="absolute inset-0 opacity-10"
                   style={{ backgroundImage: "repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%)", backgroundSize: "20px 20px" }} />
               )}
-              {/* Banner também centralizado */}
               <div className="relative max-w-4xl mx-auto w-full px-8 py-8">
                 <div className="text-xs opacity-60 font-medium uppercase tracking-widest mb-3">{disc.codigo} · {CONFIG.modulo}</div>
                 <h2 className="text-3xl font-bold mb-2">{disc.nome}</h2>
                 <p className="text-white opacity-70 text-sm max-w-xl leading-relaxed">{disc.descricao}</p>
-                <div className="flex items-center gap-3 mt-4">
+                <div className="flex items-center gap-3 mt-4 flex-wrap">
                   <span className="text-xs bg-white bg-opacity-15 px-3 py-1 rounded-full">{disc.ch}</span>
                   <span className="text-xs bg-white bg-opacity-15 px-3 py-1 rounded-full">{CONFIG.periodo}</span>
+                  {/* ✅ LINKS CLASSROOM — banner desktop */}
+                  {disc.ClassroomA && (
+                    <a href={disc.ClassroomA} target="_blank" rel="noopener noreferrer"
+                      className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full transition-all font-semibold">
+                      🔗 Turma A
+                    </a>
+                  )}
+                  {disc.ClassroomB && (
+                    <a href={disc.ClassroomB} target="_blank" rel="noopener noreferrer"
+                      className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full transition-all font-semibold">
+                      🔗 Turma B
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -424,7 +453,7 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
 }
 
 // ============================================================
-// LAYOUT MOBILE — original preservado
+// LAYOUT MOBILE
 // ============================================================
 function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
   const disc = disciplinaAtiva ? disciplinas.find(d => d.id === disciplinaAtiva) : null;
@@ -440,12 +469,29 @@ function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
               className="flex items-center gap-1.5 text-sm text-white opacity-70 hover:opacity-100 active:opacity-100 mb-4 transition-opacity py-1 -ml-1 touch-manipulation">
               ← Voltar ao painel
             </button>
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-3">
               <div className="w-14 h-14 rounded-2xl bg-white bg-opacity-20 flex items-center justify-center text-3xl flex-shrink-0">{disc.icon}</div>
-              <div>
+              <div className="flex-1 min-w-0">
                 <div className="text-xs opacity-70 font-medium uppercase tracking-wide">{disc.codigo} · {CONFIG.modulo}</div>
                 <div className="text-xl font-bold leading-tight">{disc.nome}</div>
                 <div className="text-xs opacity-75 mt-0.5">{disc.ch} · {CONFIG.periodo}</div>
+                {/* ✅ LINKS CLASSROOM — header mobile (bug corrigido: disc em vez de d) */}
+                {(disc.ClassroomA || disc.ClassroomB) && (
+                  <div className="mt-2 flex flex-wrap gap-2" onClick={e => e.stopPropagation()}>
+                    {disc.ClassroomA && (
+                      <a href={disc.ClassroomA} target="_blank" rel="noopener noreferrer"
+                        className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full font-semibold transition-all">
+                        🔗 Turma A
+                      </a>
+                    )}
+                    {disc.ClassroomB && (
+                      <a href={disc.ClassroomB} target="_blank" rel="noopener noreferrer"
+                        className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full font-semibold transition-all">
+                        🔗 Turma B
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -514,6 +560,23 @@ function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                     </div>
                     <div className="text-xs text-gray-400 mt-0.5">{d.codigo} · {d.ch}</div>
                     <div className="text-xs text-gray-500 mt-1 leading-relaxed">{d.descricao}</div>
+                    {/* ✅ LINKS CLASSROOM — lista mobile */}
+                    {(d.ClassroomA || d.ClassroomB) && (
+                      <div className="flex flex-wrap gap-2 mt-2" onClick={e => e.stopPropagation()}>
+                        {d.ClassroomA && (
+                          <a href={d.ClassroomA} target="_blank" rel="noopener noreferrer"
+                            className="text-xs text-blue-600 hover:underline font-medium">
+                            🔗 Turma A
+                          </a>
+                        )}
+                        {d.ClassroomB && (
+                          <a href={d.ClassroomB} target="_blank" rel="noopener noreferrer"
+                            className="text-xs text-blue-600 hover:underline font-medium">
+                            🔗 Turma B
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
                   <span className="text-gray-300 text-xl flex-shrink-0">›</span>
                 </div>
