@@ -9,7 +9,7 @@ const CONFIG = {
   escola: "ETE Cícero Dias",
   curso: "Desenvolvimento de Sistemas",
   modulo: "Módulo 1 · Subsequente",
-  periodo: "2025–2026",
+  periodo: "2026–2026",
   professora: {
     nome: "Samara Silvia Sabino",
     titulo: "Professora · Módulo 1",
