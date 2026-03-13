@@ -22,7 +22,7 @@ const CONFIG = {
 const disciplinas = [
   { id: "dcu", codigo: "DE_232", nome: "Design Centrado no Usuário", ch: "40h", cor: "indigo", icon: "🎯", disponivel: true,  imagem: dcuApp, descricao: "Avaliar, questionar e justificar decisões de design com base em usabilidade e interação.",  ClassroomA: "https://classroom.google.com/c/Nzk0MTMxNjMyNjM4?cjc=fni6mzwd",  ClassroomB: "https://classroom.google.com/c/Nzk0MTMxNTE0MDAy?cjc=7gg4shse"},
   { id: "dt",  codigo: "DE_233", nome: "Design Thinking",            ch: "40h", cor: "rose",   icon: "💡", disponivel: true,  imagem: dtApp, descricao: "Criar com empatia — persona, prototipação e desenvolvimento de soluções inovadoras.", ClassroomA: "https://classroom.google.com/c/Nzk0MTMxNTcxMTk4?cjc=hnuoejfx", ClassroomB: "https://classroom.google.com/c/Nzk0MTMxMTE2MDQy?cjc=k4yaddw4" },
-  { id: "pi",  codigo: "DE_234", nome: "Projeto Integrador I",       ch: "80h", cor: "orange", icon: "🚀", disponivel: false, imagem: piApp, descricao: "Integrar os conhecimentos do módulo em um projeto real orientado aos ODS." },
+  { id: "pi",  codigo: "DE_234", nome: "Projeto Integrador I",       ch: "80h", cor: "orange", icon: "🚀", disponivel: true,  imagem: piApp, descricao: "HTML5 + CSS3 + protótipo Figma — do portfólio individual ao projeto ODS em grupo." },
 ];
 
 const corMap = {
@@ -94,6 +94,7 @@ function AvaliacaoPasso({ num, titulo, cor, children }) {
 function PlanoDCU() {
   const [expanded, setExpanded] = useState(null);
   const [showLegend, setShowLegend] = useState(false);
+  const [activeTab, setActiveTab] = useState("aulas");
 
   return (
     <div>
@@ -101,8 +102,20 @@ function PlanoDCU() {
         Esta disciplina te ensina a <strong>avaliar, questionar e justificar decisões de design</strong> com base em princípios técnicos de usabilidade e interação. Não adianta o código mais perfeito se o usuário não consegue encontrar o botão de salvar.
       </div>
 
+      {/* Tabs */}
+      <div className="flex gap-2 mb-4">
+        <button onClick={() => setActiveTab("aulas")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "aulas" ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📚 Aulas
+        </button>
+        <button onClick={() => setActiveTab("avaliacoes")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "avaliacoes" ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📋 Avaliações
+        </button>
+      </div>
 
-      <div>
+      {activeTab === "aulas" && (
+        <div>
           <button onClick={() => setShowLegend(!showLegend)}
             className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1 font-medium mb-3 py-1 touch-manipulation">
             <span>{showLegend ? "▲" : "▼"}</span> O que significam as tags?
@@ -180,7 +193,160 @@ function PlanoDCU() {
             ))}
           </div>
         </div>
+      )}
 
+      {activeTab === "avaliacoes" && (
+        <div className="space-y-5">
+
+          {/* RESUMO DE PONTOS */}
+          <div className="grid grid-cols-3 gap-2 text-xs">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-center">
+              <span className="font-bold text-indigo-800 block text-base">2 pts</span>
+              <span className="text-indigo-600">Relatório de Marca</span>
+            </div>
+            <div className="bg-violet-50 border border-violet-200 rounded-xl p-3 text-center">
+              <span className="font-bold text-violet-800 block text-base">4 pts</span>
+              <span className="text-violet-600">Desafio UX</span>
+            </div>
+            <div className="bg-teal-50 border border-teal-200 rounded-xl p-3 text-center">
+              <span className="font-bold text-teal-800 block text-base">4 pts</span>
+              <span className="text-teal-600">Projeto ODS</span>
+            </div>
+          </div>
+
+          {/* AVALIAÇÃO 1: RELATÓRIO DE MARCA */}
+          <div className="border-2 border-indigo-200 rounded-2xl overflow-hidden">
+            <div className="bg-indigo-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">📝</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Relatório de Marca + Análise Visual</span>
+                <span className="ml-2 text-xs bg-white text-indigo-700 font-bold px-2 py-0.5 rounded-full">2 pts</span>
+              </div>
+            </div>
+            <div className="bg-indigo-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-indigo-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">10 de abril — entrega via Classroom até 23h59</p></div>
+                <div className="bg-white rounded-lg p-2 border border-indigo-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Individual (ou dupla/trio). PDF entregue via Classroom.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-indigo-800 mb-2">O que será avaliado</p>
+                <ul className="space-y-1.5">
+                  {[
+                    "Pesquisa real sobre a marca — manual de marca, site institucional, materiais oficiais. Referências obrigatórias, sem 'eu acho' ou respostas de IA sem fonte.",
+                    "Paleta de cores — cores oficiais, psicologia das cores, por que fazem sentido para o público. Teste de contraste WCAG AA.",
+                    "Tipografia — fontes da marca, o que a escolha comunica emocionalmente, como a hierarquia de texto funciona nas interfaces.",
+                    "Análise de 2 telas reais (site ou app) — prints anotados mostrando onde cor e tipografia impactam a percepção e decisão do usuário.",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-indigo-400 mt-0.5 flex-shrink-0">→</span>
+                      <span className="text-xs text-indigo-800 leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="p-3 bg-white border border-indigo-200 rounded-lg text-xs text-indigo-700">
+                <p className="font-semibold mb-1">🎯 Critério de avaliação</p>
+                <p className="leading-relaxed">O que vale é o <strong>raciocínio</strong> — por que essa cor, por que essa fonte, qual o impacto no usuário. Relatório sem referências perde ponto automaticamente. 2 páginas bem argumentadas valem mais que 8 páginas de achismo.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* AVALIAÇÃO 2: DESAFIO UX */}
+          <div className="border-2 border-violet-200 rounded-2xl overflow-hidden">
+            <div className="bg-violet-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🎯</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Desafio: UX na Prática</span>
+                <span className="ml-2 text-xs bg-white text-violet-700 font-bold px-2 py-0.5 rounded-full">4 pts</span>
+              </div>
+            </div>
+            <div className="bg-violet-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-violet-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Seminário de Heurísticas — 1 de junho</p></div>
+                <div className="bg-white rounded-lg p-2 border border-violet-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Individual. Doc 1 página + protótipo Figma + pitch 3 min.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-violet-800 mb-2">Critérios em DCU</p>
+                <div className="space-y-2">
+                  {[
+                    { titulo: "Auditoria heurística", pts: "1,5 pts", desc: "Identificou e justificou corretamente a heurística quebrada — print anotado, severidade classificada (cosmética, grave ou catastrófica) e impacto no usuário explicado." },
+                    { titulo: "Análise do Bloco 1", pts: "1 pt", desc: "Pelo menos 3 elementos analisados com raciocínio técnico: Gestalt, UX/design emocional, cor e tipografia ou IHC." },
+                    { titulo: "Redesign com critério DCU", pts: "1,5 pts", desc: "O protótipo corrige a heurística de forma visível e aplica os princípios analisados. Redesign que adiciona ruído visual (viola H8) ou ignora o problema identificado não pontua." },
+                  ].map((c, i) => (
+                    <div key={i} className="bg-white border border-violet-200 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-violet-800 flex-1">{c.titulo}</span>
+                        <span className="text-xs bg-violet-600 text-white font-bold px-2 py-0.5 rounded-full flex-shrink-0">{c.pts}</span>
+                      </div>
+                      <p className="text-xs text-violet-700 leading-relaxed">{c.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700">
+                <p className="font-semibold">💡 Esta mesma entrega também vale 4 pts em DT</p>
+                <p className="mt-0.5 leading-relaxed">Em DT a avaliação foca no ciclo criativo: qualidade da persona, POV com insight genuíno e caráter de inovação da solução.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* AVALIAÇÃO 2: PROJETO ODS */}
+          <div className="border-2 border-teal-200 rounded-2xl overflow-hidden">
+            <div className="bg-teal-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🌍</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Projeto Integrador — Validação DCU</span>
+                <span className="ml-2 text-xs bg-white text-teal-700 font-bold px-2 py-0.5 rounded-full">4 pts</span>
+              </div>
+            </div>
+            <div className="bg-teal-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-teal-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Final de junho ou julho — apresentação final do PI</p></div>
+                <div className="bg-white rounded-lg p-2 border border-teal-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Em grupo. Validação presencial no protótipo durante o pitch do PI.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-teal-800 mb-2">O que a professora valida ao vivo no protótipo</p>
+                <div className="space-y-2">
+                  {[
+                    { titulo: "Heurísticas de Nielsen aplicadas", pts: "1,5 pts", desc: "Mínimo 3 heurísticas identificáveis no protótipo — com print e justificativa no documento entregue. Não basta aplicar: precisa estar documentado." },
+                    { titulo: "Acessibilidade", pts: "0,5 pt", desc: "Pelo menos 1 elemento aplicado: contraste WCAG AA (mínimo 4,5:1 para texto), alt text em imagens, navegabilidade lógica." },
+                    { titulo: "Coerência com a persona (DT)", pts: "1 pt", desc: "As decisões de interface respondem à dor da persona definida em DT. Interface que ignora a persona perde este critério." },
+                    { titulo: "Consistência visual", pts: "1 pt", desc: "Cor, tipografia e hierarquia alinhadas com os princípios do Bloco 1. Gramática visual aplicada: Gestalt, contraste, espaçamento consistente." },
+                  ].map((c, i) => (
+                    <div key={i} className="bg-white border border-teal-200 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-teal-800 flex-1">{c.titulo}</span>
+                        <span className="text-xs bg-teal-600 text-white font-bold px-2 py-0.5 rounded-full flex-shrink-0">{c.pts}</span>
+                      </div>
+                      <p className="text-xs text-teal-700 leading-relaxed">{c.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-3 bg-white border border-teal-200 rounded-xl text-xs">
+                <p className="font-semibold text-teal-800 mb-2">🔗 O mesmo projeto, avaliado de ângulos diferentes</p>
+                <div className="space-y-1.5">
+                  {[
+                    { badge:"DCU · 4pts", bg:"bg-teal-600",   desc:"Usabilidade: heurísticas, acessibilidade, coerência com persona, consistência visual." },
+                    { badge:"DT · 6pts",  bg:"bg-rose-600",   desc:"Processo criativo: imersão, persona, ideação, storytelling no pitch." },
+                    { badge:"PI · 8pts",  bg:"bg-red-600",    desc:"Processo ágil (Trello) + apresentação + documentos + protótipo alta fidelidade." },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-2 items-start">
+                      <span className={`${item.bg} text-white px-2 py-0.5 rounded-full font-bold text-xs flex-shrink-0`}>{item.badge}</span>
+                      <span className="text-gray-600 leading-relaxed">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-3 bg-white border border-teal-200 rounded-lg text-xs text-teal-700">
+                <p className="font-semibold mb-1">🎯 Como funciona a validação</p>
+                <p className="leading-relaxed">A professora valida os critérios <strong>diretamente no protótipo durante a apresentação</strong>. O documento com prints e justificativas das heurísticas deve ser entregue via Classroom antes do evento. Documento não entregue = heurísticas não avaliadas.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 }
@@ -425,6 +591,7 @@ const dtAvaliacoes = [
 function PlanoDT() {
   const [expanded, setExpanded] = useState(null);
   const [showLegend, setShowLegend] = useState(false);
+  const [activeTab, setActiveTab] = useState("aulas");
 
   return (
     <div>
@@ -432,7 +599,20 @@ function PlanoDT() {
         Esta disciplina te ensina a <strong>criar com empatia</strong> — entender o problema antes de construir a solução. Você vai sair daqui sabendo conduzir imersões, construir personas, prototipar no Figma e defender uma ideia em pitch ao vivo.
       </div>
 
-      <div>
+      {/* Tabs */}
+      <div className="flex gap-2 mb-4">
+        <button onClick={() => setActiveTab("aulas")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "aulas" ? "bg-rose-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📚 Aulas
+        </button>
+        <button onClick={() => setActiveTab("avaliacoes")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "avaliacoes" ? "bg-rose-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📋 Avaliações
+        </button>
+      </div>
+
+      {activeTab === "aulas" && (
+        <div>
           <button onClick={() => setShowLegend(!showLegend)}
             className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1 font-medium mb-3 py-1 touch-manipulation">
             <span>{showLegend ? "▲" : "▼"}</span> O que significam as tags?
@@ -510,9 +690,376 @@ function PlanoDT() {
             ))}
           </div>
         </div>
+      )}
+
+      {activeTab === "avaliacoes" && (
+        <div className="space-y-5">
+
+          {/* RESUMO DE PONTOS */}
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="bg-pink-50 border border-pink-200 rounded-xl p-3 text-center">
+              <span className="font-bold text-pink-800 block text-base">4 pts</span>
+              <span className="text-pink-600">Desafio UX</span>
+            </div>
+            <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 text-center">
+              <span className="font-bold text-orange-800 block text-base">6 pts</span>
+              <span className="text-orange-600">Projeto ODS</span>
+            </div>
+          </div>
+
+          {/* AVALIAÇÃO 1: DESAFIO UX */}
+          <div className="border-2 border-pink-200 rounded-2xl overflow-hidden">
+            <div className="bg-pink-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🎯</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Desafio: UX na Prática</span>
+                <span className="ml-2 text-xs bg-white text-pink-700 font-bold px-2 py-0.5 rounded-full">4 pts</span>
+              </div>
+            </div>
+            <div className="bg-pink-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-pink-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Pitch em sala — semana de 18 a 22 de maio</p></div>
+                <div className="bg-white rounded-lg p-2 border border-pink-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Individual. Doc análise + Figma (até 3 telas) + pitch 3 min.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-pink-800 mb-2">Critérios em DT</p>
+                <div className="space-y-2">
+                  {[
+                    { titulo: "Ciclo DT documentado", pts: "1,5 pts", desc: "Persona com dor real, POV com insight genuíno, ideação documentada com pelo menos 3 ideias antes da escolha final. Persona genérica ou POV óbvio zera este critério." },
+                    { titulo: "Caráter de inovação", pts: "1 pt", desc: "A solução vai além do óbvio. Não é só corrigir o que estava errado — é propor algo que surpreende e faz sentido para o usuário real." },
+                    { titulo: "Pitch de 3 minutos", pts: "1,5 pts", desc: "Antes → problema → solução com justificativa. 3 minutos claros e objetivos. Quem não consegue explicar em 3 minutos não dominou o projeto." },
+                  ].map((c, i) => (
+                    <div key={i} className="bg-white border border-pink-200 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-pink-800 flex-1">{c.titulo}</span>
+                        <span className="text-xs bg-pink-600 text-white font-bold px-2 py-0.5 rounded-full flex-shrink-0">{c.pts}</span>
+                      </div>
+                      <p className="text-xs text-pink-700 leading-relaxed">{c.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-2.5 bg-indigo-50 border border-indigo-200 rounded-lg text-xs text-indigo-700">
+                <p className="font-semibold">🎯 Esta mesma entrega também vale 4 pts em DCU</p>
+                <p className="mt-0.5 leading-relaxed">Em DCU a avaliação foca na qualidade técnica: heurística identificada corretamente, redesign com critério de usabilidade, elementos do Bloco 1 aplicados.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* AVALIAÇÃO 3: PROJETO ODS */}
+          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden">
+            <div className="bg-orange-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🌍</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Projeto Final ODS</span>
+                <span className="ml-2 text-xs bg-white text-orange-700 font-bold px-2 py-0.5 rounded-full">6 pts</span>
+              </div>
+            </div>
+            <div className="bg-orange-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-orange-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Final de junho ou julho — evento final do PI</p></div>
+                <div className="bg-white rounded-lg p-2 border border-orange-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Em grupo. Pitch 7 min ao vivo no Figma. Mesmos grupos do PI e DCU.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-orange-800 mb-2">O que é avaliado em DT</p>
+                <div className="space-y-2">
+                  {[
+                    { titulo: "Qualidade da persona e imersão", pts: "2 pts", desc: "A persona precisa ter uma dor real e específica, sustentada por pesquisa de campo (entrevista ou observação). Persona inventada sem pesquisa real zera este critério." },
+                    { titulo: "Processo criativo documentado", pts: "2 pts", desc: "Todas as etapas do DT documentadas: imersão (matriz CSD, pesquisa), definição (POV, mapa de empatia), ideação (brainstorming, pelo menos 3 ideias) e prototipação." },
+                    { titulo: "Storytelling no pitch", pts: "2 pts", desc: "O pitch precisa contar a história do usuário — não da solução. Estrutura: contexto do ODS → quem é a persona → qual é a dor → como a solução resolve → próximo passo." },
+                  ].map((c, i) => (
+                    <div key={i} className="bg-white border border-orange-200 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-orange-800 flex-1">{c.titulo}</span>
+                        <span className="text-xs bg-orange-600 text-white font-bold px-2 py-0.5 rounded-full flex-shrink-0">{c.pts}</span>
+                      </div>
+                      <p className="text-xs text-orange-700 leading-relaxed">{c.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-3 bg-white border border-orange-200 rounded-xl text-xs">
+                <p className="font-semibold text-orange-800 mb-2">🔗 O mesmo projeto, avaliado de ângulos diferentes</p>
+                <div className="space-y-1.5">
+                  {[
+                    { badge:"DT · 6pts",  bg:"bg-rose-600",   desc:"Processo criativo: persona real, imersão documentada, ideação, storytelling." },
+                    { badge:"DCU · 4pts", bg:"bg-teal-600",   desc:"Usabilidade: heurísticas, acessibilidade, coerência visual, gramática visual." },
+                    { badge:"PI · 8pts",  bg:"bg-red-600",    desc:"Processo ágil (Trello) + apresentação + documentos + protótipo alta fidelidade." },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-2 items-start">
+                      <span className={`${item.bg} text-white px-2 py-0.5 rounded-full font-bold text-xs flex-shrink-0`}>{item.badge}</span>
+                      <span className="text-gray-600 leading-relaxed">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-3 bg-white border border-orange-200 rounded-lg text-xs text-orange-700">
+                <p className="font-semibold mb-1">🎯 O que diferencia nota alta de nota baixa</p>
+                <p className="leading-relaxed">Nota 6: persona com dor específica + processo criativo completo + pitch que conta uma história que emociona. Nota 4: persona genérica, etapas do DT cumpridas no papel mas sem profundidade, pitch focado na solução e não no usuário.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )}
     </div>
   );
 }
+
+// ============================================================
+// DADOS — PROJETO INTEGRADOR I (DE_234)
+// ============================================================
+const piBlocos = [
+  { id: 1, label: "BLOCO 1", titulo: "HTML5 — A Estrutura de Tudo", periodo: "Março – Abril", color: "bg-orange-600", foco: "A turma sai do zero absoluto e chega ao HTML semântico completo através de um projeto guiado: a construção de um Portfólio Pessoal. Ao mesmo tempo, cada aluno escolhe 1 dos 9 mini-projetos práticos para desenvolver individualmente." },
+  { id: 2, label: "BLOCO 2", titulo: "CSS3 — Do Estilo ao Layout Responsivo", periodo: "Maio – Junho", color: "bg-amber-600", foco: "Aplicar CSS3 progressivamente sobre o HTML do Portfólio Pessoal. Os alunos aproveitam para finalizar o estilo visual dos mini-projetos individuais. Entrega avaliativa na Aula 12." },
+  { id: 3, label: "BLOCO 3", titulo: "Projeto Final ODS — Figma e Trello", periodo: "Junho – Julho", color: "bg-red-600", foco: "Construir do zero o protótipo do projeto ODS em Figma — baixa, média e alta fidelidade — até o prototype interativo. O processo segue os pilares do DT. Apresentação final: pitch de 7 minutos ao vivo no Figma." },
+];
+
+const piAulas = [
+  { bloco:1, num:1,  titulo:"Como a Web Funciona + Ambiente de Desenvolvimento", tipo:"fixa", entrega:null, desc:"Apresentação da disciplina. O que é um portfólio de desenvolvedor. Como a web funciona — cliente, servidor, HTTP, o papel do HTML (estrutura), CSS (visual) e JS (comportamento). VS Code com extensões essenciais (Live Server, Prettier, Auto Rename Tag). Conta no GitHub e primeiro commit." },
+  { bloco:1, num:2,  titulo:"HTML5 — Estrutura Base e Tags Essenciais de Texto", tipo:"fixa", entrega:null, desc:"Anatomia do HTML — tag, atributo, elemento, aninhamento. Tags obrigatórias: html, head, body. Meta charset, meta viewport (fundamental — sem isso o site quebra no celular). Tags de texto: h1–h6 (hierarquia e SEO), p, strong, em. Code-along: estrutura base do Portfólio Pessoal." },
+  { bloco:1, num:3,  titulo:"HTML5 — Imagens, Links e Atributos de Acessibilidade", tipo:"fixa", entrega:null, desc:"Tag img — src, alt (obrigatório — acessibilidade + SEO). Formatos: JPG, PNG, SVG. Tag a — href, target=_blank, rel=noopener. Por que o alt é ético além de técnico. Code-along: inserir imagens com alt descritivo, adicionar links, organizar /images." },
+  { bloco:1, num:4,  titulo:"HTML5 — Tags Semânticas", tipo:"fixa", entrega:null, desc:"Por que semântica existe — SEO, acessibilidade, manutenção. As tags: header, nav, main, section, article, aside, footer. Diferença entre div (não diz nada) e section (tem propósito semântico). Code-along: reestruturar todo o HTML usando tags semânticas." },
+  { bloco:1, num:5,  titulo:"HTML5 — Formulários e Validação Nativa", tipo:"fixa", entrega:null, desc:"Tag form. Inputs: text, email, password, number, date, checkbox, radio. Label e for — obrigatório por acessibilidade. Validação nativa: required, minlength, type=email. A H5 de Nielsen no HTML — prevenir erros antes de acontecerem. Code-along: formulário de contato do portfólio." },
+  { bloco:1, num:6,  titulo:"HTML5 — Tabelas, Listas, Multimídia e Validação Final", tipo:"fixa", entrega:null, desc:"Listas: ul, ol, li. Tabelas: table, thead, tbody, tr, th, td — para dados tabulares, nunca para layout. Tag video e iframe. Validação final no W3C. Checkpoint do Bloco 1: HTML completo, semântico e validado antes de passar ao CSS." },
+  { bloco:2, num:7,  titulo:"CSS3 — Seletores, Cascata e Primeiras Cores", tipo:"fixa", entrega:null, desc:"Como linkar o CSS. Seletores de tag, classe e ID. Cascata e especificidade. Variáveis CSS: --cor-primaria, --fonte-principal. Cores: hex, rgb, hsl. Code-along: criar style.css, variáveis CSS com as cores do Figma, aplicar cor de fundo e Google Fonts." },
+  { bloco:2, num:8,  titulo:"CSS3 — Tipografia e Box Model", tipo:"fixa", entrega:null, desc:"Tipografia: font-size (rem vs px), font-weight, line-height, letter-spacing. Box model: conteúdo + padding + border + margin. box-sizing: border-box. Code-along: tipografia completa seguindo hierarquia do Figma, espaçamento entre seções." },
+  { bloco:2, num:9,  titulo:"CSS3 — Flexbox", tipo:"fixa", entrega:null, desc:"display:flex, flex-direction, justify-content, align-items, flex-wrap, gap. Os 3 casos de uso mais comuns: nav horizontal, cards lado a lado, centralizar elemento na tela. Code-along: Flexbox no cabeçalho, na seção de cards e em elemento centralizado. Dica: Flexbox Froggy." },
+  { bloco:2, num:10, titulo:"CSS3 — Grid e Responsividade", tipo:"fixa", entrega:null, desc:"CSS Grid para layouts de 2 e 3 colunas. Media queries: @media (max-width: 768px). Mobile-first. Como o Figma mobile (375px) corresponde ao breakpoint mobile do CSS. Code-along: Grid em 1 seção, media queries e teste no DevTools." },
+  { bloco:2, num:11, titulo:"CSS3 — Pseudo-classes, Transições e Organização", tipo:"fixa", entrega:null, desc:":hover, :focus, :active. Transições: transition com duration e ease. Por que o :focus visível é acessibilidade. Organização do CSS: variáveis → reset → base → componentes → layout → responsivo. Code-along: hover e transição nos botões, :focus visível." },
+  { bloco:2, num:12, titulo:"Portfólio Individual + Mini-projeto (Entrega Avaliativa)", tipo:"fixa", entrega:{ label:"📝 Site Portfólio + Mini-projeto — 2 pts", detail:"Link do portfólio publicado no GitHub Pages (1,0 pt) com link funcional para o Mini-projeto totalmente estilizado (+1,0 pt). Entrega via Classroom até o final do dia." }, desc:"Aula de validação e entrega avaliativa. GitHub Pages: Settings > Pages > Branch: main. Em 1–2 minutos o site está no ar. O portfólio deve ter: foto/avatar, nome, descrição, habilidades do semestre e link em destaque para o mini-projeto." },
+  { bloco:3, num:13, titulo:"Sprint 1 — Kickoff e Documentação", tipo:"fixa", entrega:null, desc:"Definição do tema ODS de cada grupo e criação do board no Trello. Construção da persona, mapa de empatia e demais documentos de imersão. Início da Matriz CSD, análise de concorrência e Canva Lean." },
+  { bloco:3, num:14, titulo:"Sprint 2 — Documentação + Baixa Fidelidade", tipo:"fixa", entrega:null, desc:"Finalização das documentações (jornada do usuário, matriz de impacto e esforço, fluxo de tarefas, diagrama de telas) e construção dos primeiros frames de baixa fidelidade no Figma — mínimo 3 telas esboçadas." },
+  { bloco:3, num:15, titulo:"Sprint 3 — Baixa Fidelidade", tipo:"fixa", entrega:null, desc:"Todas as telas em baixa fidelidade finalizadas. Fluxo de navegação mapeado. Feedback da professora em cada grupo. GitHub Pages testado — nunca apresentar via localhost." },
+  { bloco:3, num:16, titulo:"Sprint 4 — Média Fidelidade", tipo:"fixa", entrega:null, desc:"Paleta de cores e tipografia definidas e aplicadas. Cabeçalho, botões e cards com estilo consistente. Componentes reutilizáveis criados no Figma." },
+  { bloco:3, num:17, titulo:"Sprint 5 — Alta Fidelidade", tipo:"fixa", entrega:null, desc:"Imagens reais aplicadas via Unsplash. Refinamento de espaçamentos e hierarquia visual. Todas as telas em alta fidelidade. Avisar grupos: a professora de DCU valida heurísticas na apresentação final." },
+  { bloco:3, num:18, titulo:"Sprint 6 — Prototype e Ajustes Finais", tipo:"fixa", entrega:null, desc:"Telas conectadas no modo Prototype. Fluxo navegável testado. Documentos do projeto organizados para entrega (Trello com histórico, persona, análise de concorrência, jornada do usuário e demais artefatos)." },
+  { bloco:3, num:19, titulo:"Sprint 7 — Prototype e Ajustes Finais", tipo:"fixa", entrega:null, desc:"Ajustes finais com base no feedback da Sprint 6. Simulação do pitch de 7 minutos. Revisão de todos os documentos. O link do protótipo precisa estar compartilhado com permissão de visualização." },
+  { bloco:3, num:20, titulo:"Apresentação Final — Pitch ODS", tipo:"fixa", entrega:{ label:"🚀 Projeto Final ODS — 8 pts", detail:"Pitch de 7 minutos por grupo. Navegação ao vivo no Figma. Avaliação integrada com DCU. Link do protótipo + documentos via Classroom antes do evento." }, desc:"Pitch de 7 minutos por grupo. Navegação ao vivo no Figma. Duas pessoas do grupo apresentam. A professora de DCU valida as heurísticas durante a apresentação. PI avalia: processo ágil (Trello) + apresentação + documentos + protótipo alta fidelidade." },
+];
+
+const piMiniProjetos = [
+  { num:"01", nome:"Layout de Blog",               desc:"Cabeçalho, barra lateral, lista de postagens e rodapé." },
+  { num:"02", nome:"Formulário de Cadastro",        desc:"Campos de nome, e-mail, senha e botão de envio." },
+  { num:"03", nome:"Página de Login",               desc:"Campos de usuário e senha, botão de login, layout simples." },
+  { num:"04", nome:"Landing Page de Produto",       desc:"Imagens, descrição do produto e botão de chamada à ação (CTA)." },
+  { num:"05", nome:"Menu de Navegação Responsivo",  desc:"Menu que muda de formato entre desktop e mobile." },
+  { num:"06", nome:"Galeria de Imagens",            desc:"Grade de fotos com efeito de hover para ampliar." },
+  { num:"07", nome:"Tabela de Preços",              desc:"Planos estilizados com cores e bordas para destacar informações." },
+  { num:"08", nome:"Cartão de Contato",             desc:"Layout de cartão de visita com nome, cargo, telefone e e-mail." },
+  { num:"09", nome:"Animação de Hover em Botões",   desc:"Botão com efeito de mudança de cor ou animação ao passar o mouse." },
+];
+
+const piSubcriterios = [
+  { titulo: "Processo Ágil — Trello", pts: "1 pt",  desc: "Board com histórico de tarefas, colunas organizadas, sprints registrados ao longo do semestre." },
+  { titulo: "Apresentação Oral",      pts: "2 pts", desc: "Clareza, navegação do protótipo ao vivo, pitch de 7 min, máximo 2 apresentadores por equipe." },
+  { titulo: "Documentos do protótipo final", pts: "2 pts", desc: "Persona + matriz de impacto e esforço + análise de concorrência + jornada do usuário + problema e solução + diagrama de telas + fluxo de tarefas + matriz CSD + canva lean." },
+  { titulo: "Protótipo Alta Fidelidade no Figma", pts: "3 pts", desc: "Mínimo 3 telas funcionais conectadas no modo Prototype. Sem navegação funcionando = não avaliado." },
+];
+
+// ============================================================
+// COMPONENTE — PLANO PI
+// ============================================================
+function PlanoPI() {
+  const [expanded, setExpanded] = useState(null);
+  const [showLegend, setShowLegend] = useState(false);
+  const [activeTab, setActiveTab] = useState("aulas");
+  const [showMini, setShowMini] = useState(false);
+
+  return (
+    <div>
+      <div className="mb-4 p-3 sm:p-4 bg-orange-50 border border-orange-200 rounded-xl text-sm lg:text-base text-orange-800 leading-relaxed">
+        Esta disciplina integra <strong>HTML5, CSS3 e Figma</strong> num único percurso: do portfólio individual ao protótipo ODS em grupo. Você aprende fazendo — cada aula é um code-along com entrega real.
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-2 mb-4">
+        <button onClick={() => setActiveTab("aulas")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "aulas" ? "bg-orange-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📚 Aulas
+        </button>
+        <button onClick={() => setActiveTab("avaliacoes")}
+          className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all touch-manipulation ${activeTab === "avaliacoes" ? "bg-orange-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>
+          📋 Avaliações
+        </button>
+      </div>
+
+      {activeTab === "aulas" && (
+        <div>
+          <button onClick={() => setShowLegend(!showLegend)}
+            className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1 font-medium mb-3 py-1 touch-manipulation">
+            <span>{showLegend ? "▲" : "▼"}</span> O que significam as tags?
+          </button>
+          {showLegend && (
+            <div className="mb-3 p-3 bg-white border border-gray-200 rounded-xl space-y-2">
+              {Object.entries(tipoInfo).map(([k, v]) => (
+                <div key={k} className="flex items-start gap-2">
+                  <span className={`text-xs px-2 py-0.5 rounded border font-medium flex-shrink-0 ${v.color}`}>{v.label}</span>
+                  <span className="text-xs text-gray-600">{v.desc}</span>
+                </div>
+              ))}
+              <div className="flex items-start gap-2">
+                <span className="text-xs px-2 py-0.5 rounded border font-medium flex-shrink-0 bg-rose-50 text-rose-700 border-rose-200">Entrega</span>
+                <span className="text-xs text-gray-600">Aula com atividade avaliativa — clique para ver detalhes.</span>
+              </div>
+            </div>
+          )}
+          <div className="space-y-1">
+            {piBlocos.map((bloco) => (
+              <div key={bloco.id}>
+                <div className={`${bloco.color} text-white rounded-xl px-4 py-3 mt-3 mb-2 shadow-sm`}>
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="text-xs font-bold opacity-75 uppercase tracking-wider border border-white border-opacity-40 px-2 py-0.5 rounded-full">{bloco.label}</span>
+                    <span className="text-xs opacity-75">{bloco.periodo}</span>
+                  </div>
+                  <div className="font-bold text-base lg:text-lg">{bloco.titulo}</div>
+                  <div className="mt-1 text-sm lg:text-base opacity-90 leading-relaxed">{bloco.foco}</div>
+                </div>
+                {piAulas.filter(a => a.bloco === bloco.id).map((aula) => {
+                  const cfg = tipoInfo[aula.tipo];
+                  const key = `pi-${aula.bloco}-${aula.num}`;
+                  const isOpen = expanded === key;
+                  return (
+                    <div key={key} onClick={() => setExpanded(isOpen ? null : key)}
+                      className="rounded-xl border cursor-pointer transition-all mb-1 shadow-sm touch-manipulation border-gray-200 bg-white hover:border-gray-300 active:bg-gray-50">
+                      <div className="flex items-start gap-3 px-4 py-3.5">
+                        <div className="flex-shrink-0 w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">{aula.num}</div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="font-semibold text-gray-900 text-sm lg:text-base">{aula.titulo}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded border font-medium ${cfg.color}`}>{cfg.label}</span>
+                            {aula.entrega && <span className="text-xs px-2 py-0.5 rounded border bg-rose-50 text-rose-700 border-rose-200 font-medium">Entrega</span>}
+                          </div>
+                          {!isOpen && <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{aula.desc}</p>}
+                        </div>
+                        <span className="text-gray-400 text-xs flex-shrink-0 mt-2">{isOpen ? "▲" : "▼"}</span>
+                      </div>
+                      {isOpen && (
+                        <div className="px-4 pb-4 border-t border-gray-100 pt-3 space-y-2">
+                          <p className="text-sm lg:text-base text-gray-700 leading-relaxed">{aula.desc}</p>
+                          {aula.entrega && (
+                            <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700 space-y-1">
+                              <p className="font-semibold">{aula.entrega.label}</p>
+                              <p>{aula.entrega.detail}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === "avaliacoes" && (
+        <div className="space-y-5">
+          {/* PORTFÓLIO */}
+          <div className="border-2 border-orange-300 rounded-2xl overflow-hidden">
+            <div className="bg-orange-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🖥️</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Site Portfólio + Mini-projeto</span>
+                <span className="ml-2 text-xs bg-white text-orange-700 font-bold px-2 py-0.5 rounded-full">2 pts</span>
+              </div>
+            </div>
+            <div className="bg-orange-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-orange-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Bloco 2 — Aula 12, entrega via Classroom até o final do dia</p></div>
+                <div className="bg-white rounded-lg p-2 border border-orange-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Individual. Link do GitHub Pages com mini-projeto linkado.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-orange-800 mb-2">O que será avaliado</p>
+                <ul className="space-y-1.5">
+                  {[
+                    "Portfólio publicado no GitHub Pages com foto/avatar, nome, descrição e habilidades do semestre (1 pt)",
+                    "Mini-projeto HTML/CSS da lista, totalmente estilizado e funcionando, linkado em destaque no portfólio (+1 pt)",
+                    "HTML semântico validado no W3C — sem erros críticos",
+                    "CSS com variáveis, tipografia hierarquizada e pelo menos 1 media query",
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-orange-400 mt-0.5 flex-shrink-0">→</span>
+                      <span className="text-xs text-orange-800 leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <button onClick={() => setShowMini(!showMini)}
+                  className="text-xs text-orange-700 font-semibold flex items-center gap-1 touch-manipulation">
+                  {showMini ? "▲" : "▼"} Ver os 9 mini-projetos disponíveis
+                </button>
+                {showMini && (
+                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {piMiniProjetos.map(mp => (
+                      <div key={mp.num} className="bg-white border border-orange-200 rounded-lg p-2.5 text-xs">
+                        <span className="font-bold text-orange-700">#{mp.num} {mp.nome}</span>
+                        <p className="text-gray-500 mt-0.5">{mp.desc}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="p-3 bg-white border border-orange-200 rounded-lg text-xs text-orange-700">
+                <p className="font-semibold mb-1">🎯 Critério</p>
+                <p className="leading-relaxed">O portfólio precisa estar no ar via GitHub Pages — localhost não é avaliado. O mini-projeto precisa estar linkado e funcional. HTML e CSS devem refletir o que foi ensinado nos Blocos 1 e 2.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* PROJETO ODS */}
+          <div className="border-2 border-red-300 rounded-2xl overflow-hidden">
+            <div className="bg-red-600 px-4 py-3 flex items-center gap-2">
+              <span className="text-2xl">🚀</span>
+              <div className="flex-1">
+                <span className="text-white font-bold text-sm">Projeto Final ODS</span>
+                <span className="ml-2 text-xs bg-white text-red-700 font-bold px-2 py-0.5 rounded-full">8 pts</span>
+              </div>
+            </div>
+            <div className="bg-red-50 p-4 space-y-3">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-white rounded-lg p-2 border border-red-100"><span className="font-semibold text-gray-700">📅 Quando</span><p className="text-gray-500 mt-0.5">Bloco 3 — Aulas 18–20 (final de junho ou julho)</p></div>
+                <div className="bg-white rounded-lg p-2 border border-red-100"><span className="font-semibold text-gray-700">📋 Formato</span><p className="text-gray-500 mt-0.5">Em grupo. Pitch 7 min ao vivo no Figma. Avaliação integrada com DCU.</p></div>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-red-800 mb-2">Subcritérios de avaliação</p>
+                <div className="space-y-2">
+                  {piSubcriterios.map((sc, i) => (
+                    <div key={i} className="bg-white border border-red-200 rounded-lg p-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-red-800 flex-1">{sc.titulo}</span>
+                        <span className="text-xs bg-red-600 text-white font-bold px-2 py-0.5 rounded-full flex-shrink-0">{sc.pts}</span>
+                      </div>
+                      <p className="text-xs text-red-700 leading-relaxed">{sc.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="p-3 bg-white border border-red-200 rounded-xl text-xs">
+                <p className="font-semibold text-red-800 mb-2">🔗 Mesmo projeto, 3 notas diferentes</p>
+                <div className="space-y-1.5">
+                  {[
+                    { badge:"DT · 6pts", bg:"bg-rose-600",   desc:"Processo criativo: persona real, imersão documentada, ideação, iteração e storytelling no pitch." },
+                    { badge:"DCU · 4pts", bg:"bg-indigo-600", desc:"Usabilidade: heurísticas de Nielsen aplicadas, acessibilidade, consistência visual." },
+                    { badge:"PI · 8pts",  bg:"bg-red-600",    desc:"Processo ágil (Trello) + apresentação oral + documentos + protótipo alta fidelidade no Figma." },
+                  ].map((item, i) => (
+                    <div key={i} className="flex gap-2 items-start">
+                      <span className={`${item.bg} text-white px-2 py-0.5 rounded-full font-bold text-xs flex-shrink-0`}>{item.badge}</span>
+                      <span className="text-gray-600 text-xs leading-relaxed">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 function PlanoEmBreve({ disc }) {
   const c = corMap[disc.cor];
@@ -1012,7 +1559,7 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                 atividade.id === "relatorio" ? <AtividadeRelatorio /> :
                 atividade.id === "ods" ? <AtividadeODS /> :
                 atividade.id === "delicatte" ? <AtividadeDelicatte /> : null
-              ) : disc.id === "dt" ? <PlanoDT /> : disc.disponivel ? <PlanoDCU /> : <PlanoEmBreve disc={disc} />}
+              ) : disc.id === "dt" ? <PlanoDT /> : disc.id === "pi" ? <PlanoPI /> : disc.disponivel ? <PlanoDCU /> : <PlanoEmBreve disc={disc} />}
             </div>
           </div>
         )}
@@ -1071,7 +1618,7 @@ function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
             atividade.id === "relatorio" ? <AtividadeRelatorio /> :
             atividade.id === "ods" ? <AtividadeODS /> :
             atividade.id === "delicatte" ? <AtividadeDelicatte /> : null
-          ) : disc.id === "dt" ? <PlanoDT /> : disc.disponivel ? <PlanoDCU /> : <PlanoEmBreve disc={disc} />}
+          ) : disc.id === "dt" ? <PlanoDT /> : disc.id === "pi" ? <PlanoPI /> : disc.disponivel ? <PlanoDCU /> : <PlanoEmBreve disc={disc} />}
         </div>
       </div>
     );
