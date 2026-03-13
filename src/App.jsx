@@ -22,7 +22,7 @@ const CONFIG = {
 const disciplinas = [
   { id: "dcu", codigo: "DE_232", nome: "Design Centrado no Usuário", ch: "40h", cor: "indigo", icon: "🎯", disponivel: true,  imagem: dcuApp, descricao: "Avaliar, questionar e justificar decisões de design com base em usabilidade e interação.",  ClassroomA: "https://classroom.google.com/c/Nzk0MTMxNjMyNjM4?cjc=fni6mzwd",  ClassroomB: "https://classroom.google.com/c/Nzk0MTMxNTE0MDAy?cjc=7gg4shse"},
   { id: "dt",  codigo: "DE_233", nome: "Design Thinking",            ch: "40h", cor: "rose",   icon: "💡", disponivel: true,  imagem: dtApp, descricao: "Criar com empatia — persona, prototipação e desenvolvimento de soluções inovadoras.", ClassroomA: "https://classroom.google.com/c/Nzk0MTMxNTcxMTk4?cjc=hnuoejfx", ClassroomB: "https://classroom.google.com/c/Nzk0MTMxMTE2MDQy?cjc=k4yaddw4" },
-  { id: "pi",  codigo: "DE_234", nome: "Projeto Integrador I",       ch: "80h", cor: "orange", icon: "🚀", disponivel: true,  imagem: piApp, descricao: "HTML5 + CSS3 + protótipo Figma — do portfólio individual ao projeto ODS em grupo." },
+  { id: "pi",  codigo: "DE_234", nome: "Projeto Integrador I",       ch: "80h", cor: "orange", icon: "🚀", disponivel: true,  imagem: piApp, descricao: "HTML5 + CSS3 + protótipo Figma — do portfólio individual ao projeto ODS em grupo.", ClassroomA: "https://classroom.google.com/c/ODUxNTEwMDAwNzY5?cjc=s4lp2z46", ClassroomB: "https://classroom.google.com/c/Nzk0MTMzMTgyMDIy?cjc=4r23aldb", classroomLabelA: "HTML & CSS", classroomLabelB: "Imersão ODS" },
 ];
 
 const corMap = {
@@ -1459,13 +1459,13 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                           {d.ClassroomA && (
                             <a href={d.ClassroomA} target="_blank" rel="noopener noreferrer"
                               className="text-xs text-blue-600 hover:underline hover:text-blue-800 truncate">
-                              🔗 Turma A — Acessar Classroom
+                              🔗 {d.classroomLabelA ?? "Turma A"} — Acessar Classroom
                             </a>
                           )}
                           {d.ClassroomB && (
                             <a href={d.ClassroomB} target="_blank" rel="noopener noreferrer"
                               className="text-xs text-blue-600 hover:underline hover:text-blue-800 truncate">
-                              🔗 Turma B — Acessar Classroom
+                              🔗 {d.classroomLabelB ?? "Turma B"} — Acessar Classroom
                             </a>
                           )}
                         </div>
@@ -1541,13 +1541,13 @@ function DesktopLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                   {disc.ClassroomA && (
                     <a href={disc.ClassroomA} target="_blank" rel="noopener noreferrer"
                       className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full transition-all font-semibold">
-                      🔗 Turma A
+                      🔗 {disc.classroomLabelA ?? "Turma A"}
                     </a>
                   )}
                   {disc.ClassroomB && (
                     <a href={disc.ClassroomB} target="_blank" rel="noopener noreferrer"
                       className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full transition-all font-semibold">
-                      🔗 Turma B
+                      🔗 {disc.classroomLabelB ?? "Turma B"}
                     </a>
                   )}
                 </div>
@@ -1597,13 +1597,13 @@ function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                     {disc.ClassroomA && (
                       <a href={disc.ClassroomA} target="_blank" rel="noopener noreferrer"
                         className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full font-semibold transition-all">
-                        🔗 Turma A
+                        🔗 {disc.classroomLabelA ?? "Turma A"}
                       </a>
                     )}
                     {disc.ClassroomB && (
                       <a href={disc.ClassroomB} target="_blank" rel="noopener noreferrer"
                         className="text-xs bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1 rounded-full font-semibold transition-all">
-                        🔗 Turma B
+                        🔗 {disc.classroomLabelB ?? "Turma B"}
                       </a>
                     )}
                   </div>
@@ -1687,13 +1687,13 @@ function MobileLayout({ disciplinaAtiva, setDisciplinaAtiva }) {
                         {d.ClassroomA && (
                           <a href={d.ClassroomA} target="_blank" rel="noopener noreferrer"
                             className="text-xs text-blue-600 hover:underline font-medium">
-                            🔗 Turma A
+                            🔗 {d.classroomLabelA ?? "Turma A"}
                           </a>
                         )}
                         {d.ClassroomB && (
                           <a href={d.ClassroomB} target="_blank" rel="noopener noreferrer"
                             className="text-xs text-blue-600 hover:underline font-medium">
-                            🔗 Turma B
+                            🔗 {d.classroomLabelB ?? "Turma B"}
                           </a>
                         )}
                       </div>
